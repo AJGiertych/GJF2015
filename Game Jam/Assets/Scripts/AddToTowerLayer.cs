@@ -18,6 +18,9 @@ public class AddToTowerLayer : MonoBehaviour {
         if(c.gameObject.layer == 9)
         {
             gameObject.layer = 9;
+			Vector3 newPos = gameObject.transform.position;
+			newPos.z = 3.46917f;
+			gameObject.transform.position = newPos;;
         }
     }
 }
