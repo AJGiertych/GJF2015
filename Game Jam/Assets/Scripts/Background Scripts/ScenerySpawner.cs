@@ -4,8 +4,11 @@ using System.Collections.Generic;
 
 public class ScenerySpawner : MonoBehaviour {
     private List<GameObject> scenery;
-    public List<GameObject> low, mid, hi;
+    public List<GameObject> lowL, midL, hiL, lowR, midR, hiR;
     public float heightChange = 100;
+    private int previous, current;
+    public float lerpSpeed;
+    public AudioSource[] sources;  
     public float spawnDelay = 5f;
     private float timer;
     public float depthRange = 5;
@@ -14,34 +17,55 @@ public class ScenerySpawner : MonoBehaviour {
     public GameObject right, left;
 	// Use this for initialization
 	void Start () {
-	
-	}
+        sources[0].loop = true;
+        sources[0].volume = 1.0f;
+        sources[0].Play();
+        sources[1].loop = true;
+        sources[1].volume = 0;
+        sources[1].Play();
+        sources[2].loop = true;
+        sources[2].volume = 0;
+        sources[2].Play();
+        previous = 0;
+        current = 0;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        if(CameraMove.Height <= heightChange)
+        AudioShit();
+        int r = (int)Random.Range(0, 2);
+        if (CameraMove.Height <= heightChange)
         {
-            scenery = low;
+            if (r == 0)
+                scenery = lowL;
+            else
+                scenery = lowR;
         }
-        else if(CameraMove.Height > heightChange && CameraMove.Height <= 2 * heightChange)
+        else if (CameraMove.Height > heightChange && CameraMove.Height <= 2 * heightChange)
         {
-            scenery = mid;
+            if (r == 0)
+                scenery = midL;
+            else
+                scenery = midR;
         }
         else
         {
-            scenery = hi;
+            if (r == 0)
+                scenery = hiL;
+            else
+                scenery = hiR;
         }
         timer += Time.deltaTime;
-        if(timer >= spawnDelay)
+        if (timer >= spawnDelay)
         {
             timer = 0;
             GameObject g = Instantiate(scenery[(int)Random.Range(0, scenery.Count - 1)]) as GameObject;
             int direction = (int)Random.Range(0, 2);
-            if(direction == 0)
+            if (r == 1)
             {
                 g.tag = "right";
                 g.transform.position = new Vector3(left.transform.position.x, left.transform.position.y + Random.Range(-heightRange, heightRange), left.transform.position.z + Random.Range(-depthRange, depthRange));
-                SceneryMovement sm = g.GetComponent <SceneryMovement> () as SceneryMovement;
+                SceneryMovement sm = g.GetComponent<SceneryMovement>() as SceneryMovement;
                 sm.direction = SceneryMovement.Direction.Right;
             }
             else
@@ -51,7 +75,7 @@ public class ScenerySpawner : MonoBehaviour {
                 SceneryMovement sm = g.GetComponent<SceneryMovement>() as SceneryMovement;
                 sm.direction = SceneryMovement.Direction.Left;
             }
-            if(g.transform.position.y < minHeight)
+            if (g.transform.position.y < minHeight)
             {
                 g.transform.position = new Vector3(g.transform.position.x, minHeight, g.transform.position.z);
             }
@@ -59,4 +83,31 @@ public class ScenerySpawner : MonoBehaviour {
             //g.transform.position = new Vector3(g.transform.position.x, g.transform.position.y, right.transform.position.z + offset);
         }
 	}
+
+    void AudioShit()
+    {
+        if (CameraMove.Height < heightChange)
+            current = 0;
+        else if (CameraMove.Height >= heightChange && CameraMove.Height < 2 * heightChange)
+            current = 1;
+        else
+            current = 2;
+        if(current != previous)
+        {
+            FadeOut(previous);
+            FadeIn(current);
+        }
+        if (sources[current].volume > 0.95f && sources[previous].volume < 0.05f)
+            previous = current;
+    }
+
+    void FadeOut(int source)
+    {
+        sources[source].volume = Mathf.Lerp(sources[source].volume, 0, lerpSpeed * Time.deltaTime);
+    }
+
+    void FadeIn(int source)
+    {
+        sources[source].volume = Mathf.Lerp(sources[source].volume, 1, lerpSpeed * Time.deltaTime);
+    }
 }

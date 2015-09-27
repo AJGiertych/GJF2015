@@ -34,6 +34,16 @@ public class BuildTower : MonoBehaviour {
 
 	void OnCollisionStay(Collision coll)
 	{
+		if(coll.gameObject.layer == 8)
+		{
+			coll.gameObject.layer = 9;
+			Transform [] tempTrans = coll.gameObject.GetComponentsInChildren<Transform>();
+			foreach(Transform i in tempTrans)
+			{
+				i.gameObject.layer = 9;
+			}
+			Destroy(coll.gameObject.GetComponent<ObjectManager>());
+		}
 		if(coll.gameObject.layer == 9)
 		{
 			if(coll.rigidbody.IsSleeping())
