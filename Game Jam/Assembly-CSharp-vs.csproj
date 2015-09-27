@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\DragRigidbody.cs" />
      <Compile Include="Assets\Scripts\DynamicBlue.cs" />
      <Compile Include="Assets\Scripts\MoveUp.cs" />
+     <Compile Include="Assets\Scripts\MoveUpWithCamera.cs" />
      <Compile Include="Assets\Scripts\ObjectManager.cs" />
      <Compile Include="Assets\Scripts\RopeRender.cs" />
      <Compile Include="Assets\Scripts\Spawner.cs" />

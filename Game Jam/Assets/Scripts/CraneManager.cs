@@ -50,36 +50,25 @@ public class CraneManager : MonoBehaviour {
 	{
 		grabbing = true;
 		int grabHash = Animator.StringToHash("Grab");
-		int clawOpenHash = Animator.StringToHash("Claw Open");
-		int clawCloseHash = Animator.StringToHash("Claw Close");
 		int ungrabHash = Animator.StringToHash("UnGrab");
 
 
 		yield return new WaitForSeconds(1.0f);
 		mator.Play(grabHash);
-		if(mator.GetNextAnimatorStateInfo(2).shortNameHash != clawOpenHash)
-			mator.Play(clawOpenHash);
 		yield return 0;
 		while(mator.GetCurrentAnimatorStateInfo(1).normalizedTime < 1)
 		{
 			yield return 0;
 		}
 
-		Vector3 returnPos = claw.transform.position;
+		Transform returnPos = claw.GetComponent<ClawYPos>().Target;
 		Vector3 target = claw.transform.position;
 		target.y = clawTarget.position.y;
-		yield return StartCoroutine(MoveClaw(returnPos, target));
+		yield return StartCoroutine(MoveClawDown(returnPos, target));
 
 		spawner.Spawn();
 
-		mator.Play(clawCloseHash);
-		yield return 0;
-		while(mator.GetCurrentAnimatorStateInfo(2).normalizedTime < 1)
-		{
-			yield return 0;
-		}
-
-		yield return StartCoroutine(MoveClaw(target, returnPos));
+		yield return StartCoroutine(MoveClawUp(target, returnPos));
 
 		mator.Play(ungrabHash);
 		yield return 0;
@@ -91,33 +80,34 @@ public class CraneManager : MonoBehaviour {
 		yield return null;
 	}
 
-	IEnumerator MoveClaw(Vector3 ini, Vector3 target)
+	IEnumerator MoveClawDown(Transform ini, Vector3 target)
 	{
-		Vector3 initial = ini;
-		Vector3 end = ini;
-		end.y = target.y;
-		float start = Time.time;
 		float covered = 0;
 		float frac = 0;
 		while(frac < 1.0f)
 		{
-
-			covered = (Time.time - start) * dropSpeed;
 			covered += Time.deltaTime;
 			frac = covered / dropSpeed;
 			if(frac > 1.0f)
 				frac = 1.0f;
-			claw.transform.position = Vector3.Lerp(initial,end,frac);
+			claw.transform.position = Vector3.Lerp(ini.position,target,frac);
 			yield return 0;
 		}
 	}
 
-	public void OpenClaw()
+	IEnumerator MoveClawUp(Vector3 ini, Transform target)
 	{
-		int clawOpenHash = Animator.StringToHash("Claw Open");
-		if(mator.GetNextAnimatorStateInfo(2).shortNameHash != clawOpenHash)
-			mator.Play(clawOpenHash);
-
+		float covered = 0;
+		float frac = 0;
+		while(frac < 1.0f)
+		{
+			covered += Time.deltaTime;
+			frac = covered / dropSpeed;
+			if(frac > 1.0f)
+				frac = 1.0f;
+			claw.transform.position = Vector3.Lerp(ini,target.position,frac);
+			yield return 0;
+		}
 	}
 
 

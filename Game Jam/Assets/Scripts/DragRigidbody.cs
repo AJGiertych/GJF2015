@@ -59,7 +59,6 @@ namespace UnityStandardAssets.Utility
             m_SpringJoint.connectedBody = hit.rigidbody;
 
             StartCoroutine("DragObject", hit.distance);
-			FindObjectOfType<CraneManager>().OpenClaw();
         }
 
 
