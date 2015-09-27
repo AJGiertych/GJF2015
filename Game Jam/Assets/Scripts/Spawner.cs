@@ -14,7 +14,8 @@ public class Spawner : MonoBehaviour {
 
     public void Spawn()
     {
-        GameObject go = (GameObject)Instantiate((GameObject)spawnables[0], transform.position, transform.rotation);
+		int temp = Random.Range(0,spawnables.Length);
+        GameObject go = (GameObject)Instantiate((GameObject)spawnables[temp], transform.position, transform.rotation);
         go.transform.parent = transform;
         hasObject = true;
     }

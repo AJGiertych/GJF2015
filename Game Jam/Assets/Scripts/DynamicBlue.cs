@@ -23,7 +23,7 @@ public class DynamicBlue : MonoBehaviour {
 	void Update () {
 		T = (Camera.main.transform.position.y - iniHeight) / blackHeight;
 		Color temp = Color.Lerp(initial,black,t);
-		print(t);
+		//print(t);
 		temp.b *= T + 1;
 		GetComponent<MeshRenderer>().material.color = temp;
 	}

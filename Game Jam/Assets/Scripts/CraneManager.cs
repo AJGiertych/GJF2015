@@ -97,14 +97,16 @@ public class CraneManager : MonoBehaviour {
 		Vector3 end = ini;
 		end.y = target.y;
 		float start = Time.time;
-		float length = end.y - initial.y;
-		length = Mathf.Abs(length);
 		float covered = 0;
 		float frac = 0;
 		while(frac < 1.0f)
 		{
+
 			covered = (Time.time - start) * dropSpeed;
-			frac = covered / length;
+			covered += Time.deltaTime;
+			frac = covered / dropSpeed;
+			if(frac > 1.0f)
+				frac = 1.0f;
 			claw.transform.position = Vector3.Lerp(initial,end,frac);
 			yield return 0;
 		}

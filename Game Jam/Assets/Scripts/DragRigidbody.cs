@@ -74,6 +74,8 @@ namespace UnityStandardAssets.Utility
             bool dragging = true;
             while (Input.GetMouseButton(0) && dragging)
             {
+				if (m_SpringJoint.connectedBody == null || m_SpringJoint.connectedBody.gameObject.layer == 9)
+					break;
                 var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
                 m_SpringJoint.transform.position = ray.GetPoint(distance);
                 m_SpringJoint.connectedBody.gameObject.GetComponent<Rigidbody>().useGravity = false;
@@ -87,9 +89,7 @@ namespace UnityStandardAssets.Utility
                     m_SpringJoint.connectedBody.gameObject.transform.RotateAround(m_SpringJoint.transform.position, Vector3.back, turnSpeed * Time.deltaTime);
                     zRot = m_SpringJoint.connectedBody.gameObject.transform.rotation.z;
                 }
-                Debug.Log(zRot);
-                if (m_SpringJoint.connectedBody.gameObject.layer == 9)
-                    dragging = false;
+                //Debug.Log(zRot);
                 yield return null;
             }
             if (m_SpringJoint.connectedBody)
@@ -98,7 +98,8 @@ namespace UnityStandardAssets.Utility
                 m_SpringJoint.connectedBody.angularDrag = oldAngularDrag;
                 m_SpringJoint.connectedBody.velocity = new Vector3(0, 0, 0);
                 //m_SpringJoint.connectedBody.gameObject.layer = 9;
-                m_SpringJoint.connectedBody.gameObject.GetComponent<Rigidbody>().useGravity = true;
+				if(m_SpringJoint.connectedBody.gameObject.GetComponent<Rigidbody>() != null)
+                	m_SpringJoint.connectedBody.gameObject.GetComponent<Rigidbody>().useGravity = true;
                 zRot = 0;
                 m_SpringJoint.connectedBody = null;
             }

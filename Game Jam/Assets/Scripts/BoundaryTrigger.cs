@@ -15,9 +15,9 @@ public class BoundaryTrigger : MonoBehaviour {
 
     void OnTriggerEnter(Collider c)
     {
-        if(c.gameObject.layer == 9)
-        {
-            CameraMove.towerCollapse = true;
-        }
+//        if(c.gameObject.layer == 9)
+//        {
+//            CameraMove.towerCollapse = true;
+//        }
     }
 }

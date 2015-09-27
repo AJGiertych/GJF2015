@@ -51,7 +51,9 @@
      <Compile Include="Assets\Scripts\Background Scripts\SceneryDeleter.cs" />
      <Compile Include="Assets\Scripts\Background Scripts\SceneryMovement.cs" />
      <Compile Include="Assets\Scripts\Background Scripts\ScenerySpawner.cs" />
+     <Compile Include="Assets\Scripts\BindWithJoint.cs" />
      <Compile Include="Assets\Scripts\BoundaryTrigger.cs" />
+     <Compile Include="Assets\Scripts\BuildTower.cs" />
      <Compile Include="Assets\Scripts\CameraMove.cs" />
      <Compile Include="Assets\Scripts\ClawYPos.cs" />
      <Compile Include="Assets\Scripts\CollideSound.cs" />
@@ -63,6 +65,7 @@
      <Compile Include="Assets\Scripts\ObjectManager.cs" />
      <Compile Include="Assets\Scripts\RopeRender.cs" />
      <Compile Include="Assets\Scripts\Spawner.cs" />
+     <Compile Include="Assets\Scripts\Tripping.cs" />
      <Compile Include="Assets\Scripts\follwCamera.cs" />
      <None Include="Assets\Shaders\Extrude.shader" />
  <Reference Include="UnityEngine.UI">
