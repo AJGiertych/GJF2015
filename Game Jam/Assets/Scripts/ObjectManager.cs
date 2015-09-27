@@ -17,11 +17,13 @@ public class ObjectManager : MonoBehaviour {
         if (tag == "floating")
         {   
             body.useGravity = false;
+			body.velocity = Vector3.zero;
+			//body.isKinematic = true;
         }
         else
         {
             body.useGravity = true;
-
+			//body.isKinematic = false;
         }
     }
 

@@ -10,7 +10,7 @@ public class Tripping : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(transform.eulerAngles.z < 40 || transform.eulerAngles.z > 320)
+		if(transform.eulerAngles.z > 40 && transform.eulerAngles.z < 320)
 		{
 			CameraMove.towerCollapse = true;
 			print("Fell");

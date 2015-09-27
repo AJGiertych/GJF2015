@@ -17,6 +17,7 @@ public class Spawner : MonoBehaviour {
 		int temp = Random.Range(0,spawnables.Length);
         GameObject go = (GameObject)Instantiate((GameObject)spawnables[temp], transform.position, transform.rotation);
         go.transform.parent = transform;
+		//go.GetComponent<Rigidbody>().isKinematic = true;
         hasObject = true;
     }
 
