@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BuildTower : MonoBehaviour {
 
@@ -26,6 +27,13 @@ public class BuildTower : MonoBehaviour {
 			{
 				i.gameObject.layer = 9;
 			}
+
+			tempTrans = coll.gameObject.GetComponentsInParent<Transform>();
+			foreach(Transform i in tempTrans)
+			{
+				i.gameObject.layer = 9;
+			}
+
 //			Destroy(coll.rigidbody);
 			Destroy(coll.gameObject.GetComponent<ObjectManager>());
 //			coll.transform.parent = tower;
@@ -52,8 +60,12 @@ public class BuildTower : MonoBehaviour {
 				//Destroy(coll.gameObject.GetComponent<ObjectManager>());
 				coll.transform.parent = tower;
 			}
+			else
+			{
+				int tempInt = Random.Range(0,300);
+				if(tempInt == 0)
+					coll.rigidbody.Sleep();
+			}
 		}
 	}
-
-
 }
