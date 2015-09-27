@@ -26,9 +26,22 @@ public class BuildTower : MonoBehaviour {
 			{
 				i.gameObject.layer = 9;
 			}
-			Destroy(coll.rigidbody);
+//			Destroy(coll.rigidbody);
 			Destroy(coll.gameObject.GetComponent<ObjectManager>());
-			coll.transform.parent = tower;
+//			coll.transform.parent = tower;
+		}
+	}
+
+	void OnCollisionStay(Collision coll)
+	{
+		if(coll.gameObject.layer == 9)
+		{
+			if(coll.rigidbody.IsSleeping())
+			{
+				Destroy(coll.rigidbody);
+				//Destroy(coll.gameObject.GetComponent<ObjectManager>());
+				coll.transform.parent = tower;
+			}
 		}
 	}
 
