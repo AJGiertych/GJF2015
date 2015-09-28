@@ -14,7 +14,7 @@ public class DynamicBlue : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		initial = GetComponent<MeshRenderer>().material.color;
-		black = Color.black;
+		black = Color.clear;
 		t = 0;
 		iniHeight = Camera.main.transform.position.y;
 	}

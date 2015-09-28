@@ -62,7 +62,7 @@ public class BuildTower : MonoBehaviour {
 			}
 			else
 			{
-				int tempInt = Random.Range(0,300);
+				int tempInt = Random.Range(0,100);
 				if(tempInt == 0)
 					coll.rigidbody.Sleep();
 			}

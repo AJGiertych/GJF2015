@@ -27,7 +27,8 @@ public class Spawner : MonoBehaviour {
         GameObject[] gos = GameObject.FindGameObjectsWithTag("floating");
         if (gos.Length == 0)
         {
-			crane.GrabNewItem();
+			if(CameraMove.towerCollapse == false)
+				crane.GrabNewItem();
         }
     }
 }
